@@ -1,10 +1,26 @@
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem; */
   text-align: center;
+  width: 100%;
+  align-self: flex-start;
+
+  --chip-1-color: gray;
+  --chip-5-color: red;
+  --chip-25-color: rgb(15, 145, 3);
+  --chip-100-color: black;
+  --chip-500-color: purple;
+  --chip-1000-color: rgb(153, 101, 4);
 }
 
+.vh-centered-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* 
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -40,3 +56,16 @@
 .read-the-docs {
   color: #888;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+} */

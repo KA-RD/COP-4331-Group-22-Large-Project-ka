@@ -1,0 +1,42 @@
+#app-header {
+    background-color: #191f3b;
+}
+
+#roulette-header {
+    /* text-align: center; */
+    /* background-color: rgb(52, 59, 75); */
+    border-radius: 12px;
+
+    /* border-color: red; */
+    /* width: 95%; */
+
+    /* margin: 5px; */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    align-self: flex-start;
+
+    max-width: 1280px;
+    margin: 0 auto;
+    /* width: 95%; */
+    padding-inline: 2rem;
+}
+
+#logout-div {
+    /* border: 1px solid red; */
+    min-width: 64px;
+    width: 15%;
+}
+
+#username-div {
+    margin-left: 16px;
+    /* border: 1px solid red; */
+}
+
+#logout-button {
+    width: 100%;
+    /* background-color: aqua; */
+}
