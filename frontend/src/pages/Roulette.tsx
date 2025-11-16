@@ -16,79 +16,123 @@ function Roulette() {
   const [bets, setBets] = useState<PlacedBet[]>([]);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
   const [betIdCounter, setBetIdCounter] = useState(0);
+  const [spinInProgress, setSpinInProgress] = useState(false); // lock bets while spinning
 
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
   const handlePlaceBet = (bet: Bet) => {
-    if (bet.amount > balance) {
-      // Insufficient balance
-      return;
-    }
-
+    if (spinInProgress || bet.amount > balance) return;
     setBalance((prev) => prev - bet.amount);
     setBets((prev) => [...prev, { ...bet, id: betIdCounter }]);
     setBetIdCounter((prev) => prev + 1);
   };
 
   const handleClearBets = () => {
+    if (spinInProgress) return;
     setBalance((prev) => prev + currentBetTotal);
     setBets([]);
   };
 
   const handleRemoveBet = (id: number) => {
+    if (spinInProgress) return;
     const betToRemove = bets.find((b) => b.id === id);
-
     if (betToRemove) {
       setBalance(balance + betToRemove.amount);
       setBets(bets.filter((bet) => bet.id !== id));
     }
   };
 
+  const evaluateBets = (winningNumber: number, bets: PlacedBet[]) => {
+    const redNumbers = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+    let totalPayout = 0;
+
+    for (const bet of bets) {
+      const { type, value, amount } = bet;
+
+      switch (type) {
+        case "straight":
+          if (winningNumber === value) totalPayout += amount * 35;
+          break;
+        case "color":
+          if ((value === "red" && redNumbers.has(winningNumber)) ||
+              (value === "black" && winningNumber !== 0 && !redNumbers.has(winningNumber))) {
+            totalPayout += amount * 2;
+          }
+          break;
+        case "evenOdd":
+          if (winningNumber !== 0) {
+            if ((value === "even" && winningNumber % 2 === 0) ||
+                (value === "odd" && winningNumber % 2 !== 0)) totalPayout += amount * 2;
+          }
+          break;
+        case "range":
+          const [min, max] = (value as string).split("-").map(Number);
+          if (winningNumber >= min && winningNumber <= max) totalPayout += amount * 2;
+          break;
+      }
+    }
+
+    return totalPayout;
+  };
+
   const handleSpinEnd = (number: number) => {
     setWinningNumber(number);
+    const payout = evaluateBets(number, bets);
+    setBalance((prev) => prev + payout);
+    setBets([]);
+    setSpinInProgress(false); // unlock bets
   };
 
   return (
     <div>
       <AppHeader />
       <div id="roulette-content">
-        {/* Wheel Section */}
-        <div className="roulette-page-section">
-          <h2 className="header-row">Wheel</h2>
-          <div className="row">
-            <RouletteWheel onSpinEnd={handleSpinEnd} />
-            {winningNumber !== null && (
-              <div className="winning-number">
-                Winning Number: {winningNumber}
+
+        {/* Wheel + Current Bets side by side */}
+        <div className="roulette-main-row">
+          <div className="roulette-left">
+            <div className="roulette-page-section">
+              <h2 className="header-row">Wheel</h2>
+              <div className="row">
+                <RouletteWheel
+                  onSpinEnd={handleSpinEnd}
+                  onSpinStart={() => setSpinInProgress(true)} // lock bets
+                />
+                {winningNumber !== null && (
+                  <div className="winning-number">
+                    Winning Number: {winningNumber}
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+          </div>
+
+          <div className="roulette-right">
+            <div className="roulette-page-section">
+              <h2 className="header-row">Current Bets</h2>
+              <div className="row">
+                <ActiveBets bets={bets} onRemoveBet={handleRemoveBet} />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Betting Board Section */}
-        <div className="roulette-page-section">
-          <h2 className="header-row">Betting Board</h2>
-          <div className="row">
-            <Board
-              balance={balance}
-              currentBet={currentBetTotal}
-              onPlaceBet={handlePlaceBet}
-              onClearBets={handleClearBets}
-              disabled={false}
-            />
+        {/* Betting Board full width underneath */}
+        <div className="roulette-board-section">
+          <div className="roulette-page-section">
+            <h2 className="header-row">Betting Board</h2>
+            <div className="row">
+              <Board
+                balance={balance}
+                currentBet={currentBetTotal}
+                onPlaceBet={handlePlaceBet}
+                onClearBets={handleClearBets}
+                disabled={spinInProgress} // disable board while spinning
+              />
+            </div>
           </div>
         </div>
 
-        {/* Current Bets Section */}
-        <div className="roulette-page-section">
-          <h2 className="header-row">Current Bets</h2>
-          <div className="row">
-            <ActiveBets bets={bets} onRemoveBet={handleRemoveBet} />
-          </div>
-        </div>
-
-        {/* Optional Sidebar */}
-        <h2>Sidebar Leaderboard</h2>
       </div>
     </div>
   );
