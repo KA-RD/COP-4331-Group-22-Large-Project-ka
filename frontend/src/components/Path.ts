@@ -1,4 +1,4 @@
-const app_name = '165.227.19.39';
+const app_name = 'cop433103.com';
 
 export function buildPath(route: string): string {
     if (process.env.NODE_ENV !== 'development') {
