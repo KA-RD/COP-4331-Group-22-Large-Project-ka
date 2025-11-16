@@ -1,0 +1,36 @@
+.roulette-wheel-container {
+  position: relative;
+  width: 400px; /* Adjust to your wheel image */
+  margin: 0 auto;
+  text-align: center;
+}
+
+.roulette-wheel-image {
+  width: 100%;
+  display: block;
+  transform: rotate(var(--base-rotation, 0deg)); /* Base offset */
+  transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.wheel-indicator {
+  position: absolute;
+  top: -10px; /* slightly above the wheel */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: red;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.spin-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.spin-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
