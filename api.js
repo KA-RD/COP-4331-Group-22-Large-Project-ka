@@ -660,6 +660,71 @@ exports.setApp = function ( app, client )
     res.status(200).json({ error: error });
   });
 
+  app.post('/api/getcredits', async (req, res, next) => {
+    // incoming: jwtToken
+    // outgoing: credits, error
+    
+    const { jwtToken } = req.body;
+    var error = '';
+    var credits = 0;
+
+    try {
+        // Verify JWT token
+        const token = require('./createJWT.js');
+        
+        if (token.isExpired(jwtToken)) {
+            return res.status(200).json({
+                error: 'The JWT is no longer valid',
+                credits: 0,
+                jwtToken: ''
+            });
+        }
+
+        // Decode the JWT to get user info
+        const decoded = token.verifyToken(jwtToken);
+        const userId = decoded.userId;
+
+        // Get user from database
+        const db = client.db('COP4331Cards');
+        const { ObjectId } = require('mongodb');
+
+        const user = await db.collection('Users').findOne(
+            { _id: new ObjectId(userId) },
+            { Credits: { Credits: 1 } }
+        );
+
+        if (user && user.Credits !== undefined) {
+            credits = user.Credits;
+        } else {
+            error = 'User not found or credits not available';
+        }
+
+        // Refresh JWT token
+        var refreshedToken = null;
+        try {
+            refreshedToken = token.refresh(jwtToken);
+        } catch (e) {
+            console.log('Token refresh error:', e.message);
+        }
+
+        var ret = { 
+            error: error, 
+            credits: credits,
+            jwtToken: refreshedToken 
+        };
+        
+        res.status(200).json(ret);
+
+    } catch (e) {
+        console.error('Get credits error:', e);
+        res.status(200).json({ 
+            error: e.toString(), 
+            credits: 0,
+            jwtToken: null 
+        });
+    }
+});
+
 /*Test APIs:
   *debug-email-flow: tests if email is being sent out.
   *debug-users: displays users and their variables.
