@@ -52,7 +52,7 @@ exports.sendVerificationEmail = async (email, firstName, userId) => {
 
 exports.sendPasswordResetEmail = async (email, firstName, resetToken) => {
     try {
-        const resetLink = `http://localhost:5000/reset-password?token=${resetToken}`;
+        const resetLink = `https://cop433103.com:5000/reset-password?token=${resetToken}`;
         
         const msg = {
             to: email,
