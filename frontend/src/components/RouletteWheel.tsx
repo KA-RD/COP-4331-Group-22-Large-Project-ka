@@ -4,6 +4,7 @@ import wheelImg from "../assets/wheel.png";
 
 interface RouletteWheelProps {
   onSpinEnd?: (winningNumber: number) => void;
+  onSpinStart?: () => void; // callback to lock bets
 }
 
 const wheelNumbers = [
@@ -16,7 +17,7 @@ const ANGLE_PER_SEGMENT = 360 / 37;
 const BASE_OFFSET_ANGLE = ANGLE_PER_SEGMENT / 2;
 const FULL_ROTATIONS = 10;
 
-const RouletteWheel: React.FC<RouletteWheelProps> = ({ onSpinEnd }) => {
+const RouletteWheel: React.FC<RouletteWheelProps> = ({ onSpinEnd, onSpinStart }) => {
   const wheelRef = useRef<HTMLImageElement>(null);
   const [spinning, setSpinning] = useState(false);
   const [totalRotation, setTotalRotation] = useState(0);
@@ -25,6 +26,7 @@ const RouletteWheel: React.FC<RouletteWheelProps> = ({ onSpinEnd }) => {
     if (spinning) return;
 
     setSpinning(true);
+    if (onSpinStart) onSpinStart(); // lock bets in parent
 
     // Pick a random winning number
     const winningIndex = Math.floor(Math.random() * 37);
@@ -32,9 +34,7 @@ const RouletteWheel: React.FC<RouletteWheelProps> = ({ onSpinEnd }) => {
     const currentRotation = totalRotation % 360;
     const targetAngle = -winningIndex * ANGLE_PER_SEGMENT + BASE_OFFSET_ANGLE;
 
-    // Total rotation including full spins
     const rotationDiff = FULL_ROTATIONS * 360 + (targetAngle - currentRotation);
-
     const newTotalRotation = totalRotation + rotationDiff;
 
     if (wheelRef.current) {
@@ -44,7 +44,6 @@ const RouletteWheel: React.FC<RouletteWheelProps> = ({ onSpinEnd }) => {
 
     setTimeout(() => {
       setSpinning(false);
-      // Keep absolute total rotation to preserve full spins
       setTotalRotation(newTotalRotation);
       if (onSpinEnd) onSpinEnd(wheelNumbers[winningIndex]);
     }, 4000);
