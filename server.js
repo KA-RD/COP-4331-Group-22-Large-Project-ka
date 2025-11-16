@@ -40,4 +40,6 @@ app.use((req, res, next) =>
 var api = require('./api.js');
 api.setApp( app, client );
 
+require('./roulette')(app);
+
 app.listen(5000); // start Node + Express server on port 5000
