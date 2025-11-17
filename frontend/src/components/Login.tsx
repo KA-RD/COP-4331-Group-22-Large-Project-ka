@@ -139,6 +139,11 @@ function Login()
             // check if api returned an error
             if (res.error && res.error !== '') {
                 setMessage(res.error);
+
+                if (res.error === 'Please verify your email before logging in') {
+                    setPageState('verify')
+                }
+
                 return;
             }
 
