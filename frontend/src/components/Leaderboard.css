@@ -19,7 +19,7 @@
 .leaderboard-table td {
 	padding: 8px 12px;
 	/* border-bottom: 1px solid #e6e6e6; */
-	border-bottom: var(--background-color);
+	border-bottom: 4px solid var(--background-color);
 	text-align: left;
 }
 
