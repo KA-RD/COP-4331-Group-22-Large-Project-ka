@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import AppHeader from "../components/AppHeader";
 import Board, { type Bet } from "../components/Board";
@@ -12,33 +12,54 @@ export interface PlacedBet extends Bet {
 }
 
 function Roulette() {
-  const [balance, setBalance] = useState(1000);
+  const [balance, setBalance] = useState(0); // start at 0, fetch real balance
   const [bets, setBets] = useState<PlacedBet[]>([]);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
   const [betIdCounter, setBetIdCounter] = useState(0);
-  const [spinInProgress, setSpinInProgress] = useState(false); // lock bets while spinning
+  const [spinInProgress, setSpinInProgress] = useState(false);
 
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
+  // Fetch live balance when component mounts
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch("http://167.172.30.196/api/getbalance", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // add JWT header if needed: Authorization: `Bearer ${jwtToken}`
+          },
+        });
+        const data = await res.json();
+        setBalance(data.balance);
+      } catch (err) {
+        console.error("Failed to fetch balance", err);
+      }
+    };
+
+    fetchBalance();
+  }, []);
+
   const handlePlaceBet = (bet: Bet) => {
     if (spinInProgress || bet.amount > balance) return;
-    setBalance((prev) => prev - bet.amount);
-    setBets((prev) => [...prev, { ...bet, id: betIdCounter }]);
-    setBetIdCounter((prev) => prev + 1);
+    setBalance(prev => prev - bet.amount);
+    setBets(prev => [...prev, { ...bet, id: betIdCounter }]);
+    setBetIdCounter(prev => prev + 1);
   };
 
   const handleClearBets = () => {
     if (spinInProgress) return;
-    setBalance((prev) => prev + currentBetTotal);
+    setBalance(prev => prev + currentBetTotal);
     setBets([]);
   };
 
   const handleRemoveBet = (id: number) => {
     if (spinInProgress) return;
-    const betToRemove = bets.find((b) => b.id === id);
+    const betToRemove = bets.find(b => b.id === id);
     if (betToRemove) {
-      setBalance(balance + betToRemove.amount);
-      setBets(bets.filter((bet) => bet.id !== id));
+      setBalance(prev => prev + betToRemove.amount);
+      setBets(bets.filter(bet => bet.id !== id));
     }
   };
 
@@ -78,9 +99,9 @@ function Roulette() {
   const handleSpinEnd = (number: number) => {
     setWinningNumber(number);
     const payout = evaluateBets(number, bets);
-    setBalance((prev) => prev + payout);
+    setBalance(prev => prev + payout);
     setBets([]);
-    setSpinInProgress(false); // unlock bets
+    setSpinInProgress(false);
   };
 
   return (
@@ -88,7 +109,6 @@ function Roulette() {
       <AppHeader />
       <div id="roulette-content">
 
-        {/* Wheel + Current Bets side by side */}
         <div className="roulette-main-row">
           <div className="roulette-left">
             <div className="roulette-page-section">
@@ -96,7 +116,7 @@ function Roulette() {
               <div className="row">
                 <RouletteWheel
                   onSpinEnd={handleSpinEnd}
-                  onSpinStart={() => setSpinInProgress(true)} // lock bets
+                  onSpinStart={() => setSpinInProgress(true)}
                 />
                 {winningNumber !== null && (
                   <div className="winning-number">
@@ -117,7 +137,6 @@ function Roulette() {
           </div>
         </div>
 
-        {/* Betting Board full width underneath */}
         <div className="roulette-board-section">
           <div className="roulette-page-section">
             <h2 className="header-row">Betting Board</h2>
@@ -127,7 +146,7 @@ function Roulette() {
                 currentBet={currentBetTotal}
                 onPlaceBet={handlePlaceBet}
                 onClearBets={handleClearBets}
-                disabled={spinInProgress} // disable board while spinning
+                disabled={spinInProgress}
               />
             </div>
           </div>
