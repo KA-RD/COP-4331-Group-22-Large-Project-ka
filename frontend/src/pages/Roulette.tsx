@@ -104,7 +104,7 @@ function Roulette() {
     const jwtToken = sessionStorage.getItem("jwtToken");
     if (jwtToken) {
       try {
-        const response = await fetch(buildPath('api/login'), {
+        const response = await fetch(buildPath('api/addcredits'), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ credits: winloss.totalPayout - winloss.totalBet, jwtToken }),
