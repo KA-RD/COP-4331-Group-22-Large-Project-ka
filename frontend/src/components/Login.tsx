@@ -33,6 +33,10 @@ function Login()
 
     const [pageState, setPageState] = useState<PageState>('login');
 
+    function clearMessage() {
+        setMessage('');
+    }
+
     function clearFields() {
         setLoginName('');
         setPassword('');
@@ -238,14 +242,14 @@ function Login()
                 <input type="submit" id="loginButton" className="signup-buttons" value = "Login" onClick={doLogin} />
                 <p className='login-toggle'>
                     Don't have an account? &nbsp;
-                    <a className='login-toggle-link link' onClick={() => {clearFields(); setPageState('signup')}}>Sign Up</a>
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('signup')}}>Register</a>
                 </p>
                 </>
             )}
 
             {pageState === 'signup' && (
                 <>
-                <h3 id="inner-title">Sign Up</h3>
+                <h3 id="inner-title">Register</h3>
                 <span id="loginResult">{message}</span>
                 <input className='auth-field' type='text' id='signupFirstName' placeholder='First Name' value={userFirstName} onChange={handleSetFirstName} />
                 <input className='auth-field' type='text' id='signupLastName' placeholder='Last Name' value={userLastName} onChange={handleSetLastName} />
@@ -255,7 +259,7 @@ function Login()
                 <input type="submit" id="signupButton" className="signup-buttons" value = "Sign Up" onClick={doRegister} />
                 <p className='login-toggle'>
                     Already have an account? &nbsp;
-                    <a className='login-toggle-link link' onClick={() => {clearFields(); setPageState('login')}}>Login</a>
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('verify')}}>Login</a>
                 </p>
                 </>
             )}
@@ -282,13 +286,27 @@ function Login()
                     onClick={sendResetEmail}
                 />
                 <p className='login-toggle'>
-                    <a className='login-toggle-link link' onClick={() => {clearFields(); setPageState('login')}}>Back to Login</a>
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('login')}}>Back to Login</a>
                 </p>
                 </>
             )}
 
             {pageState === 'verify' && (
                 <>
+                <h3 id="inner-title">Verify Your Email</h3>
+                <p id='verify-email-description'>
+                    Please check your email and click the verification link to activate your account.
+                </p>
+                <input
+                    type='submit'
+                    id='resend-button'
+                    className='signup-buttons'
+                    value='Resend Email'
+                    onClick={sendResetEmail}
+                />
+                <p className='login-toggle'>
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('login')}}>Back to Login</a>
+                </p>
                 </>
             )}
 
