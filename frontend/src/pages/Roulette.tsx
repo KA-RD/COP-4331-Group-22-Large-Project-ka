@@ -109,6 +109,7 @@ function Roulette() {
           body: JSON.stringify({ credits: payout, jwtToken }),
         });
         const data = await response.json();
+        data
         // if (data.newBalance !== undefined) setBalance(data.newBalance);
       } catch (err) {
         console.error(err);
