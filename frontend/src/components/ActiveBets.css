@@ -1,15 +1,16 @@
+#active-bets {
+  width: 100%;
+}
+
 #active-bets ul {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
 }
 
 #active-bets li {
   background: #2e4458;
   padding: 10px 15px;
   border-radius: 8px;
-  /* border-left: 3px solid rgb(0, 172, 172); */
+  margin-bottom: 8px;
 }
 
 #active-bets li:hover {

@@ -32,7 +32,8 @@
 .roulette-right .row {
   max-height: 585px; 
   overflow-y: auto;
-  padding-right: 8px; 
+  /*dont override row padding*/
+  /* padding-right: 8px;  */ 
 }
 
 .roulette-right .row::-webkit-scrollbar {
