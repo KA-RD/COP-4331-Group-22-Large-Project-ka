@@ -1,5 +1,6 @@
 import "./Leaderboard.css";
 import { useEffect, useState } from "react";
+import { buildPath } from './Path';
 
 type LeaderboardEntry = {
 	rank: number;
@@ -18,7 +19,7 @@ export default function Leaderboard() {
 			setLoading(true);
 			setError(null);
 			try {
-				const res = await fetch("http://localhost:5000/api/leaderboard");
+				const res = await fetch(buildPath("api/leaderboard"));
 				const data = await res.json();
 				if (data.error) {
 					setError(data.error || "Unknown error");
