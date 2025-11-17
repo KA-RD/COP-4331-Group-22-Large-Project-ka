@@ -17,6 +17,8 @@ interface CustomJwtPayload extends JwtPayload {
     lastName: string;
 }
 
+type PageState = 'login' | 'signup' | 'reset' | 'verify'
+
 function Login()
 {
     const navigate = useNavigate();
@@ -27,7 +29,19 @@ function Login()
     const [userLastName, setLastName] = React.useState('');
     const [userEmail, setEmail] = React.useState('');
 
-    const [isLogin, setIsLogin] = useState(true);
+    // const [isLogin, setIsLogin] = useState(true);
+
+    const [pageState, setPageState] = useState<PageState>('login');
+
+    function clearFields() {
+        setLoginName('');
+        setPassword('');
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        // setVerificationCode('');
+        setMessage('');
+    }
 
     async function doLogin(event:any) : Promise<void>
     {
@@ -121,19 +135,14 @@ function Login()
             var res = await response.json();
 
             // check if api returned an error
-            if (res.error !== '') {
+            if (res.error && res.error !== '') {
                 setMessage(res.error);
                 return;
             }
 
             // show registration sucess
             setMessage(res.message);
-            setFirstName('');
-            setLastName('');
-            setLoginName('');
-            setPassword('');
-            setEmail('');
-            setIsLogin(true);
+            clearFields()
 
         }
         catch(error:any)
@@ -141,6 +150,44 @@ function Login()
             alert(error.toString());
             return;
         }    
+    }
+
+    async function sendResetEmail(event:any) : Promise<void> {
+        event.preventDefault();
+
+        var obj = {
+            email:userEmail
+        };
+        var js = JSON.stringify(obj);
+
+        try
+        {    
+            const response = await fetch(buildPath('api/forgot-password'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+    
+            if (!response.ok) {
+                throw new Error('Registration failed, Try again later')
+            }
+
+            // var res = JSON.parse(await response.text());
+            var res = await response.json();
+
+            // check if api returned an error
+            if (res.error && res.error !== '') {
+                setMessage(res.error);
+                return;
+            }
+
+            // show registration sucess
+            setMessage(res.message);
+            clearFields()
+
+        }
+        catch(error:any)
+        {
+            alert(error.toString());
+            return;
+        }
+
     }
 
     function handleSetLoginName( e: any ) : void
@@ -169,52 +216,73 @@ function Login()
     }
 
     return(
-      <div id="loginDiv">
-        {isLogin ? (
-          <>
-          <h3 id="inner-title">Login</h3>
-          <span id="loginResult">{message}</span>
-          <input className='auth-field' type="text" id="loginName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
-          <input className='auth-field' type="password" id="loginPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
-          <input type="submit" id="loginButton" className="signup-buttons" value = "Login" onClick={doLogin} />
-          <p className='login-toggle'>
-            Don't have an account? &nbsp;
-            <a className='login-toggle-link' onClick={() => {
-                setIsLogin(false);
-                setLoginName('');
-                setPassword('');
-                setFirstName('');
-                setLastName('');
-                setEmail('');
-                setMessage('');
-            }}>Sign Up</a>
-          </p>
-          </>
-        ) : (
-          <>
-          <h3 id="inner-title">Sign Up</h3>
-          <span id="loginResult">{message}</span>
-          <input className='auth-field' type='text' id='signupFirstName' placeholder='First Name' value={userFirstName} onChange={handleSetFirstName} />
-          <input className='auth-field' type='text' id='signupLastName' placeholder='Last Name' value={userLastName} onChange={handleSetLastName} />
-          <input className='auth-field' type='text' id='signupEmail' placeholder='Email' value={userEmail} onChange={handleSetEmail} />
-          <input className='auth-field' type="text" id="signupName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
-          <input className='auth-field' type="password" id="signupPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
-          <input type="submit" id="signupButton" className="signup-buttons" value = "Sign Up" onClick={doRegister} />
-          <p className='login-toggle'>
-            Already have an account? &nbsp;
-            <a className='login-toggle-link' onClick={() => {
-                setIsLogin(true);
-                setLoginName('');
-                setPassword('');
-                setFirstName('');
-                setLastName('');
-                setEmail('');
-                setMessage('');
-            }}>Login</a>
-          </p>
-          </>
-        )}
-      </div>
+        <div id="loginDiv">
+            {pageState === 'login' && (
+                <>
+                <h3 id="inner-title">Login</h3>
+                <span id="loginResult">{message}</span>
+                <input className='auth-field' type="text" id="loginName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
+                <input className='auth-field' type="password" id="loginPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
+                <p id='forgot-password-toggle'>
+                    <a  className='link' onClick={() => { clearFields(); setPageState('reset'); }}>
+                        Forgot Password?
+                    </a>
+                </p>
+                <input type="submit" id="loginButton" className="signup-buttons" value = "Login" onClick={doLogin} />
+                <p className='login-toggle'>
+                    Don't have an account? &nbsp;
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); setPageState('signup')}}>Sign Up</a>
+                </p>
+                </>
+            )}
+
+            {pageState === 'signup' && (
+                <>
+                <h3 id="inner-title">Sign Up</h3>
+                <span id="loginResult">{message}</span>
+                <input className='auth-field' type='text' id='signupFirstName' placeholder='First Name' value={userFirstName} onChange={handleSetFirstName} />
+                <input className='auth-field' type='text' id='signupLastName' placeholder='Last Name' value={userLastName} onChange={handleSetLastName} />
+                <input className='auth-field' type='email' id='signupEmail' placeholder='Email' value={userEmail} onChange={handleSetEmail} />
+                <input className='auth-field' type="text" id="signupName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
+                <input className='auth-field' type="password" id="signupPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
+                <input type="submit" id="signupButton" className="signup-buttons" value = "Sign Up" onClick={doRegister} />
+                <p className='login-toggle'>
+                    Already have an account? &nbsp;
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); setPageState('login')}}>Login</a>
+                </p>
+                </>
+            )}
+
+            {pageState === 'reset' && (
+                <>
+                <h3 id="inner-title">Reset Password</h3>
+                <p id='reset-password-description'>
+                    To reset your password, enter your email to recieve a reset link
+                </p>
+                <span className="result">{message}</span>
+                <input
+                    className='auth-field'
+                    type='email'
+                    placeholder='Email'
+                    value={userEmail}
+                    onChange={handleSetEmail}
+                />
+                <input
+                    type='submit'
+                    id='reset-button'
+                    className='signup-buttons'
+                    value='Send Reset Email'
+                    onClick={sendResetEmail}
+                />
+                </>
+            )}
+
+            {pageState === 'verify' && (
+                <>
+                </>
+            )}
+
+        </div>
     );
 };
 

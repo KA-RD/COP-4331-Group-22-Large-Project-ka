@@ -29,3 +29,20 @@
     background-color: rgb(5, 84, 189);
     border-radius: 4px;
 }
+
+.link {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #0056b3;
+}
+
+#forgot-password-toggle {
+    text-align: left;
+    margin-top: -12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
