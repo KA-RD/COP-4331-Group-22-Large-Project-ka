@@ -4,6 +4,7 @@ import Board, { type Bet } from "../components/Board";
 import ActiveBets from "../components/ActiveBets";
 import RouletteWheel from "../components/RouletteWheel";
 import "./Roulette.css";
+import { buildPath } from '../components/Path';
 
 export interface PlacedBet extends Bet {
   id: number;
@@ -24,7 +25,7 @@ function Roulette() {
 
     const fetchBalance = async () => {
       try {
-        const res = await fetch("http://167.172.30.196:5000/api/getcredits", {
+        const res = await fetch(buildPath("api/getcredits"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ jwtToken }),
@@ -64,11 +65,9 @@ function Roulette() {
 
   const evaluateBets = (winningNumber: number, bets: PlacedBet[]) => {
     const redNumbers = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
-    // let totalPayout = 0;
     let winloss = {totalPayout: 0, totalBet:0}
     for (const bet of bets) {
       const { type, value, amount } = bet;
-      // totalPayout -= amount
       winloss.totalBet += amount
       switch (type) {
         case "straight":
@@ -105,7 +104,7 @@ function Roulette() {
     const jwtToken = sessionStorage.getItem("jwtToken");
     if (jwtToken) {
       try {
-        const response = await fetch("http://167.172.30.196:5000/api/addcredits", {
+        const response = await fetch(buildPath('api/login'), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ credits: winloss.totalPayout - winloss.totalBet, jwtToken }),
