@@ -3,12 +3,13 @@
 import './AddFunds.css';
 import { buildPath } from './Path';
 
-interface ModalProps {
+interface AddFundsProps {
   isOpen: boolean;
   onClose: () => void;
+  setBalance: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const AddFunds: React.FC<AddFundsProps> = ({ isOpen, onClose, setBalance }) => {
     if (!isOpen) return null;
     
     const addFunds = (num: number) => {
@@ -21,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ credits: num, jwtToken }),
             });
-            // fetchBalance()
+            setBalance()
             } catch (err) {
             console.error(err);
             }
@@ -55,4 +56,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     );
 };
 
-export default Modal;
+export default AddFunds;

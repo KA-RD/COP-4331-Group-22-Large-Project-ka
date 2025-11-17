@@ -4,8 +4,11 @@ import ActiveUsername from "./ActiveUsername";
 import {useLocation, Link } from "react-router-dom";
 import AddFunds from "./AddFunds";
 
-function AppHeader()
-{
+interface AppHeaderProps {
+  setBalance: () => void;
+}
+
+const AppHeader: React.FC<AppHeaderProps> = ({ setBalance }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const location = useLocation()
 
@@ -62,6 +65,7 @@ function AppHeader()
             <AddFunds 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)}
+                setBalance={setBalance}
             />
         </>
 
