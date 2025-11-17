@@ -9,11 +9,7 @@ export interface PlacedBet extends Bet {
   id: number;
 }
 
-interface RouletteProps {
-  jwtToken: string;
-}
-
-function Roulette({ jwtToken }: RouletteProps) {
+function Roulette() {
   const [balance, setBalance] = useState(0);
   const [bets, setBets] = useState<PlacedBet[]>([]);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
@@ -23,6 +19,7 @@ function Roulette({ jwtToken }: RouletteProps) {
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
   useEffect(() => {
+    const jwtToken = sessionStorage.getItem("jwtToken");
     if (!jwtToken) return;
 
     const fetchBalance = async () => {
@@ -43,7 +40,7 @@ function Roulette({ jwtToken }: RouletteProps) {
     };
 
     fetchBalance();
-  }, [jwtToken]);
+  }, []);
 
   const handlePlaceBet = (bet: Bet) => {
     if (spinInProgress || bet.amount > balance) return;
