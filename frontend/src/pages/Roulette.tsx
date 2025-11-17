@@ -9,7 +9,11 @@ export interface PlacedBet extends Bet {
   id: number;
 }
 
-function Roulette() {
+interface RouletteProps {
+  jwtToken: string;
+}
+
+function Roulette({ jwtToken }: RouletteProps) {
   const [balance, setBalance] = useState(0);
   const [bets, setBets] = useState<PlacedBet[]>([]);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
@@ -19,29 +23,27 @@ function Roulette() {
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
   useEffect(() => {
-  const fetchBalance = async () => {
-    try {
-      const jwtToken = (window as any).jwtToken;
-      if (!jwtToken) return;
+    if (!jwtToken) return;
 
-      const res = await fetch("http://167.172.30.196/api/getbalance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ jwtToken }),
-      });
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch("http://167.172.30.196/api/getbalance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jwtToken }),
+        });
 
-      if (!res.ok) return;
+        if (!res.ok) return;
 
-      const data = await res.json();
-      setBalance(data.credits);
-    } catch (err) {
-      console.error("Failed to fetch balance", err);
-    }
-  };
+        const data = await res.json();
+        setBalance(data.credits);
+      } catch {
+        return;
+      }
+    };
 
-  fetchBalance();
-}, []);
-
+    fetchBalance();
+  }, [jwtToken]);
 
   const handlePlaceBet = (bet: Bet) => {
     if (spinInProgress || bet.amount > balance) return;
@@ -153,5 +155,3 @@ function Roulette() {
 }
 
 export default Roulette;
-
-
