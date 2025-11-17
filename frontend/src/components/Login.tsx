@@ -64,6 +64,7 @@ function Login()
             // check if api returned an error
             if (res.error && res.error !== '') {
 
+                
                 if (res.error === 'Please verify your email before logging in') {
                     setPageState('verify')
                 }
@@ -153,7 +154,8 @@ function Login()
 
             // show registration sucess
             setMessage(res.message);
-            clearFields()
+            setPageState('verify')
+            // clearFields()
 
         }
         catch(error:any)
@@ -191,7 +193,6 @@ function Login()
             // show registration sucess
             setMessage(res.message);
             clearFields()
-
         }
         catch(error:any)
         {
@@ -199,6 +200,48 @@ function Login()
             return;
         }
 
+    }
+
+    async function sendVerifyEmail(event:any) : Promise<void> {
+        event.preventDefault();
+
+        var obj = {
+            email:userEmail
+        };
+        var js = JSON.stringify(obj);
+
+        try
+        {    
+            const response = await fetch(buildPath('api/resend-verification'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+    
+            if (!response.ok) {
+                throw new Error('Registration failed, Try again later')
+            }
+
+            // var res = JSON.parse(await response.text());
+            var res = await response.json();
+
+            // check if api returned an error
+            if (res.error && res.error !== '') {
+                setMessage(res.error);
+                return;
+            }
+
+            // show registration sucess
+            setMessage(res.message);
+            clearFields()
+
+            
+            // setTimeout(() => {
+            // setPageState('login');
+            // }, 1000);
+
+        }
+        catch(error:any)
+        {
+            alert(error.toString());
+            return;
+        }
     }
 
     function handleSetLoginName( e: any ) : void
@@ -259,7 +302,7 @@ function Login()
                 <input type="submit" id="signupButton" className="signup-buttons" value = "Sign Up" onClick={doRegister} />
                 <p className='login-toggle'>
                     Already have an account? &nbsp;
-                    <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('verify')}}>Login</a>
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('login')}}>Login</a>
                 </p>
                 </>
             )}
@@ -302,7 +345,7 @@ function Login()
                     id='resend-button'
                     className='signup-buttons'
                     value='Resend Email'
-                    onClick={sendResetEmail}
+                    onClick={sendVerifyEmail}
                 />
                 <p className='login-toggle'>
                     <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('login')}}>Back to Login</a>
