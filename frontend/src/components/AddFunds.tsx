@@ -1,5 +1,3 @@
-// AddFunds.tsx
-// import { useEffect } from 'react';
 import './AddFunds.css';
 import { buildPath } from './Path';
 
