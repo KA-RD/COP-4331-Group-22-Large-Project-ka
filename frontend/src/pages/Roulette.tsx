@@ -1,10 +1,8 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import AppHeader from "../components/AppHeader";
 import Board, { type Bet } from "../components/Board";
 import ActiveBets from "../components/ActiveBets";
 import RouletteWheel from "../components/RouletteWheel";
-
 import "./Roulette.css";
 
 export interface PlacedBet extends Bet {
@@ -12,43 +10,65 @@ export interface PlacedBet extends Bet {
 }
 
 function Roulette() {
-  const [balance, setBalance] = useState(1000);
+  const [balance, setBalance] = useState(0);
   const [bets, setBets] = useState<PlacedBet[]>([]);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
   const [betIdCounter, setBetIdCounter] = useState(0);
-  const [spinInProgress, setSpinInProgress] = useState(false); // lock bets while spinning
+  const [spinInProgress, setSpinInProgress] = useState(false);
 
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
+  useEffect(() => {
+    const jwtToken = sessionStorage.getItem("token_data");
+    if (!jwtToken) return;
+
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch("http://167.172.30.196/api/getbalance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jwtToken }),
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        setBalance(data.credits);
+      } catch {
+        return;
+      }
+    };
+
+    fetchBalance();
+  }, []);
+
   const handlePlaceBet = (bet: Bet) => {
     if (spinInProgress || bet.amount > balance) return;
-    setBalance((prev) => prev - bet.amount);
-    setBets((prev) => [...prev, { ...bet, id: betIdCounter }]);
-    setBetIdCounter((prev) => prev + 1);
+    setBalance(prev => prev - bet.amount);
+    setBets(prev => [...prev, { ...bet, id: betIdCounter }]);
+    setBetIdCounter(prev => prev + 1);
   };
 
   const handleClearBets = () => {
     if (spinInProgress) return;
-    setBalance((prev) => prev + currentBetTotal);
+    setBalance(prev => prev + currentBetTotal);
     setBets([]);
   };
 
   const handleRemoveBet = (id: number) => {
     if (spinInProgress) return;
-    const betToRemove = bets.find((b) => b.id === id);
+    const betToRemove = bets.find(b => b.id === id);
     if (betToRemove) {
-      setBalance(balance + betToRemove.amount);
-      setBets(bets.filter((bet) => bet.id !== id));
+      setBalance(prev => prev + betToRemove.amount);
+      setBets(bets.filter(bet => bet.id !== id));
     }
   };
 
   const evaluateBets = (winningNumber: number, bets: PlacedBet[]) => {
     const redNumbers = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
     let totalPayout = 0;
-
     for (const bet of bets) {
       const { type, value, amount } = bet;
-
       switch (type) {
         case "straight":
           if (winningNumber === value) totalPayout += amount * 35;
@@ -71,24 +91,21 @@ function Roulette() {
           break;
       }
     }
-
     return totalPayout;
   };
 
   const handleSpinEnd = (number: number) => {
     setWinningNumber(number);
     const payout = evaluateBets(number, bets);
-    setBalance((prev) => prev + payout);
+    setBalance(prev => prev + payout);
     setBets([]);
-    setSpinInProgress(false); // unlock bets
+    setSpinInProgress(false);
   };
 
   return (
     <div>
       <AppHeader />
       <div id="roulette-content">
-
-        {/* Wheel + Current Bets side by side */}
         <div className="roulette-main-row">
           <div className="roulette-left">
             <div className="roulette-page-section">
@@ -96,7 +113,7 @@ function Roulette() {
               <div className="row">
                 <RouletteWheel
                   onSpinEnd={handleSpinEnd}
-                  onSpinStart={() => setSpinInProgress(true)} // lock bets
+                  onSpinStart={() => setSpinInProgress(true)}
                 />
                 {winningNumber !== null && (
                   <div className="winning-number">
@@ -106,7 +123,6 @@ function Roulette() {
               </div>
             </div>
           </div>
-
           <div className="roulette-right">
             <div className="roulette-page-section">
               <h2 className="header-row">Current Bets</h2>
@@ -116,8 +132,6 @@ function Roulette() {
             </div>
           </div>
         </div>
-
-        {/* Betting Board full width underneath */}
         <div className="roulette-board-section">
           <div className="roulette-page-section">
             <h2 className="header-row">Betting Board</h2>
@@ -127,15 +141,16 @@ function Roulette() {
                 currentBet={currentBetTotal}
                 onPlaceBet={handlePlaceBet}
                 onClearBets={handleClearBets}
-                disabled={spinInProgress} // disable board while spinning
+                disabled={spinInProgress}
               />
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
 }
 
 export default Roulette;
+
+
