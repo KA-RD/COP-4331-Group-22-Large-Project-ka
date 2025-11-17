@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import CardPage from './pages/CardPage';
 // import GamePage from './pages/Game';
 import RoulettePage from './pages/Roulette';
-import LeaderboardPage from './pages/Leaderboard';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() {
   return (

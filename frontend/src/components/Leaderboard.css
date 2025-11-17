@@ -25,6 +25,7 @@
 .leaderboard-table thead th {
 	background: #fafafa;
 	font-weight: 600;
+	
 }
 
 .leaderboard-empty {
@@ -36,3 +37,6 @@
 .leaderboard-info { color: #333; }
 .leaderboard-error { color: #b00020; }
 
+.leaderboard-table th {
+	color: black;
+}

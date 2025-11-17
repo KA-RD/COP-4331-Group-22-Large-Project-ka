@@ -50,7 +50,7 @@ export default function Leaderboard() {
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>Username</th>
+							{/* <th>Username</th> */}
 							<th>Name</th>
 							<th>Credits</th>
 						</tr>
@@ -67,7 +67,7 @@ export default function Leaderboard() {
 						{rows.map((r) => (
 							<tr key={r.rank + "-" + r.Login}>
 								<td>{r.rank}</td>
-								<td>{r.Login}</td>
+								{/* <td>{r.Login}</td> */}
 								<td>{r.FirstName ?? "-"}</td>
 								<td>{r.Credits}</td>
 							</tr>
