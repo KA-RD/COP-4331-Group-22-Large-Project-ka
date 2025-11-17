@@ -5,7 +5,7 @@ import "../components/Leaderboard.css";
 export default function LeaderboardPage() {
   return (
     <div>
-      <AppHeader />
+      <AppHeader setBalance={() => {return}}/>
       <div style={{ padding: 20 }}>
         <Leaderboard />
       </div>

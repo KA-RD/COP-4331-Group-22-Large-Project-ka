@@ -118,7 +118,8 @@ function Roulette() {
 
   return (
     <div>
-      <AppHeader />
+      <AppHeader setBalance={fetchBalance}/>
+
       <div id="roulette-content">
         <div className="roulette-main-row">
           <div className="roulette-left">
