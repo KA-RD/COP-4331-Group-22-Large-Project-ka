@@ -30,8 +30,7 @@
 	
 }
 
-.leaderboard-table thead tr {
-	/* background: #fafafa; */
+.leaderboard-table tr {
 	background: var(--row-color);
 }
 
