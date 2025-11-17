@@ -3,40 +3,39 @@
 }
 
 #roulette-header {
-    /* text-align: center; */
-    /* background-color: rgb(52, 59, 75); */
+
     border-radius: 12px;
-
-    /* border-color: red; */
-    /* width: 95%; */
-
-    /* margin: 5px; */
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 10px 1rem;
 
     align-self: flex-start;
 
     max-width: 1280px;
     margin: 0 auto;
-    /* width: 95%; */
-    padding-inline: 2rem;
+
+    flex-wrap: wrap;
+}
+
+@media (min-width: 800px) {
+  #roulette-header {
+    padding: 10px 2rem;
+  }
 }
 
 #logout-div {
-    /* border: 1px solid red; */
     min-width: 64px;
-    width: 15%;
+    /* width: 15%; */
+    width: auto;
+    /* padding: 0px  0px; */
 }
 
 #username-div {
     margin-left: 16px;
-    /* border: 1px solid red; */
 }
 
 #logout-button {
     width: 100%;
-    /* background-color: aqua; */
+    padding: 0px 32px 0px;
 }
