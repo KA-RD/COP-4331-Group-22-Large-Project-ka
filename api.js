@@ -151,11 +151,10 @@ exports.setApp = function ( app, client )
 	  res.status(200).json(ret);
 	});
 
-  //debugging purpose variables changed from "status = 0" and disabled email verification
   app.post('/api/register', async (req, res, next) => 
   {
     const { firstname, lastname, login, password, email } = req.body;
-    const status = '1'; // Start as unverified
+    const status = '0'; // Start as unverified
     const credits = 500;
     
     try {
@@ -175,14 +174,13 @@ exports.setApp = function ( app, client )
         const userId = result.insertedId.toString();
         
         // Send verification email
-        /*
         const emailSent = await require('./emailVerification.js').sendVerificationEmail(email, firstname, userId);
         
         if (!emailSent) 
         {
           console.log('Failed to send verification email, but user was created');
         }
-        */
+        
         var ret = { 
             error: '', 
             message: 'Registration successful! Please check your email to verify your account.',
