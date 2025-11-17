@@ -18,14 +18,21 @@
 .leaderboard-table th,
 .leaderboard-table td {
 	padding: 8px 12px;
-	border-bottom: 1px solid #e6e6e6;
+	/* border-bottom: 1px solid #e6e6e6; */
+	border-bottom: var(--background-color);
 	text-align: left;
 }
 
 .leaderboard-table thead th {
-	background: #fafafa;
+	/* background: #fafafa; */
+	background: var(--header-color);
 	font-weight: 600;
 	
+}
+
+.leaderboard-table thead tr {
+	/* background: #fafafa; */
+	background: var(--row-color);
 }
 
 .leaderboard-empty {
@@ -37,6 +44,3 @@
 .leaderboard-info { color: #333; }
 .leaderboard-error { color: #b00020; }
 
-.leaderboard-table th {
-	color: black;
-}

@@ -12,6 +12,10 @@
   --chip-100-color: black;
   --chip-500-color: purple;
   --chip-1000-color: rgb(153, 101, 4);
+
+  --background-color: #0e1328;
+  --header-color: #191f3b;
+  --row-color: #141935;
 }
 
 .vh-centered-div {
