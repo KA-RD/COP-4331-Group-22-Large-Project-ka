@@ -19,25 +19,25 @@ function Roulette() {
 
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
-  useEffect(() => {
+  const fetchBalance = async () => {
     const jwtToken = sessionStorage.getItem("jwtToken");
     if (!jwtToken) return;
+    
+    try {
+      const res = await fetch(buildPath("api/getcredits"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jwtToken }),
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      setBalance(data.credits);
+    } catch {
+      return;
+    }
+  };
 
-    const fetchBalance = async () => {
-      try {
-        const res = await fetch(buildPath("api/getcredits"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ jwtToken }),
-        });
-        if (!res.ok) return;
-        const data = await res.json();
-        setBalance(data.credits);
-      } catch {
-        return;
-      }
-    };
-
+  useEffect(() => {
     fetchBalance();
   }, []);
 
@@ -111,6 +111,7 @@ function Roulette() {
         });
         const data = await response.json();
         data
+        
         // if (data.newBalance !== undefined) setBalance(data.newBalance);
       } catch (err) {
         console.error(err);
