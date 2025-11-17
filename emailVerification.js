@@ -14,7 +14,7 @@ exports.sendVerificationEmail = async (email, firstName, userId) => {
             throw new Error('Token creation failed: ' + tokenResult.error);
         }
         
-        const verificationLink = `https://cop433103.com:5000/api/verify-email?token=${verificationToken}`;
+        const verificationLink = `http://cop433103.com:5000/api/verify-email?token=${verificationToken}`;
         
        // console.log('Verification link:', verificationLink);
         
@@ -52,7 +52,7 @@ exports.sendVerificationEmail = async (email, firstName, userId) => {
 
 exports.sendPasswordResetEmail = async (email, firstName, resetToken) => {
     try {
-        const resetLink = `https://cop433103.com:5000/reset-password?token=${resetToken}`;
+        const resetLink = `http://cop433103.com:5000/reset-password?token=${resetToken}`;
         
         const msg = {
             to: email,

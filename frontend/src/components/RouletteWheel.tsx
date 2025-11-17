@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import "./RouletteWheel.css";
-import wheelImg from "../assets/wheel.png";
+// import wheelImg from "../assets/wheel.webp";
+import wheelImg from "/wheel_400x400.webp";
+// import wheelImg from '/src/assets/wheel.webp?w=400&format=webp';
 
 interface RouletteWheelProps {
   onSpinEnd?: (winningNumber: number) => void;
@@ -57,6 +59,8 @@ const RouletteWheel: React.FC<RouletteWheelProps> = ({ onSpinEnd, onSpinStart })
         className="roulette-wheel-image"
         src={wheelImg}
         alt="Roulette Wheel"
+        fetchPriority="high"
+        loading="eager"
         style={{ transform: `rotate(${BASE_OFFSET_ANGLE}deg)` }}
       />
       <button className="spin-button" onClick={spinWheel} disabled={spinning}>

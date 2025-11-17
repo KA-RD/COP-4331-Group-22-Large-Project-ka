@@ -6,9 +6,9 @@
   width: 100%;
   align-self: flex-start;
 
-  --chip-1-color: gray;
-  --chip-5-color: red;
-  --chip-25-color: rgb(15, 145, 3);
+  --chip-1-color: rgb(92, 91, 91);
+  --chip-5-color: rgb(168, 0, 0);
+  --chip-25-color: rgb(7, 88, 0);
   --chip-100-color: black;
   --chip-500-color: purple;
   --chip-1000-color: rgb(153, 101, 4);

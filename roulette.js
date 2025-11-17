@@ -55,31 +55,29 @@ module.exports = function(app) {
 
   // POST /roulette/spin
   app.post("/roulette/spin", async (req, res) => {
+    
+    console.log("Received /roulette/spin request", req.body);
+    
     const bets = req.body.bets || [];
     const jwtToken = req.body.jwtToken; // JWT from frontend
+    
+    console.log("Bets:", bets, "JWT:", jwtToken);
 
     const result = spinWheel();
+
+     console.log("Wheel spun:", result);
+    
     const color = getColor(result);
     const isEven = result !== 0 && result % 2 === 0;
 
     const totalBet = bets.reduce((sum, b) => sum + b.amount, 0);
     const payout = evaluateBets(bets, result);
+    
+      console.log("Calculated payout:", payout);
+    
     const profit = payout - totalBet;
 
-    // --- SEND PROFIT TO /api/addcredits ---
-    if (jwtToken) {
-      try {
-        const response = await fetch('http://167.172.30.196:5000/api/addcredits', { // adjust host/port if needed
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ credits: profit, jwtToken })
-        });
-        const data = await response.json();
-        console.log('Balance update response:', data);
-      } catch (err) {
-        console.error('Error updating balance:', err);
-      }
-    }
+     console.log("Profit:", profit);
 
     // --- RETURN SPIN RESULT ---
     res.json({
@@ -91,3 +89,6 @@ module.exports = function(app) {
     });
   });
 };
+
+
+
