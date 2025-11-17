@@ -9,7 +9,13 @@
   min-width: 256px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+}
+
+@media (min-width: 800px) {
+  #roulette-content {
+    padding: 2rem;
+  }
 }
 
 .roulette-main-row {
@@ -64,15 +70,21 @@
 }
 
 .row {
-  padding: 1rem 2rem 2rem;
+  padding: 1rem;
+}
+
+@media (min-width: 800px) {
+  .row {
+    padding: 1rem 2rem 2rem;
+  }
 }
 
 .roulette-wheel-container {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .spin-button {
