@@ -99,7 +99,7 @@ function Roulette() {
     setSpinInProgress(false);
     setBalance(prev => prev + payout);
 
-    const jwtToken = sessionStorage.getItem("jwtToken");
+    /* const jwtToken = sessionStorage.getItem("jwtToken");
     if (jwtToken && payout > 0) {
       try {
         const response = await fetch("http://167.172.30.196:5000/api/addcredits", {
@@ -112,7 +112,7 @@ function Roulette() {
       } catch (err) {
         console.error(err);
       }
-    }
+    } */
   };
 
   return (
@@ -165,3 +165,4 @@ function Roulette() {
 }
 
 export default Roulette;
+
