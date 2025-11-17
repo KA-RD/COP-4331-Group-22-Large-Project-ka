@@ -24,20 +24,8 @@
   }
 }
 
-#logout-div {
-    min-width: 64px;
-    /* width: 15%; */
-    width: auto;
-    /* padding: 0px  0px; */
-}
-
 #username-div {
     margin-left: 16px;
-}
-
-#logout-button {
-    width: 100%;
-    padding: 0px 32px 0px;
 }
 
 #header-actions {
@@ -46,21 +34,22 @@
     align-items: center;
 }
 
-#leaderboard-div {
+.header-button-div {
     min-width: 64px;
     width: auto;
 }
 
-#leaderboard-button {
+.header-button {
     height: 48px;
     border-radius: 12px;
     background-color: #2e3d79;
     border-width: 0;
+
     padding: 0px 24px;
     color: white;
 }
 
-#leaderboard-button:hover {
+.header-button:hover {
     box-shadow: 0 2px 4px #000000;
     background-color: #465cb3;
 }
