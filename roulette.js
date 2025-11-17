@@ -69,6 +69,7 @@ module.exports = function(app) {
     // --- SEND PROFIT TO /api/addcredits ---
     if (jwtToken) {
       try {
+         console.log('Sending to addcredits API:', payout, 'credits, JWT:', jwtToken);
         const response = await fetch('http://167.172.30.196:5000/api/addcredits', { // adjust host/port if needed
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -91,3 +92,4 @@ module.exports = function(app) {
     });
   });
 };
+
