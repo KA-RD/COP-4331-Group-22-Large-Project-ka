@@ -1,0 +1,84 @@
+#addfunds-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#addfunds-content {
+    background: var(--row-color);
+    border-radius: 16px;
+    max-width: 640px;
+    width: 90%;
+    /* max-height: 80vh; */
+    /* overflow-y: auto; */
+    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); */
+    animation: slideUp 0.2s ease-out;
+}
+
+#addfunds-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--header-color);
+    border-radius: 16px 16px 0px 0px;
+}
+
+#addfunds-close {
+    background: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+    line-height: 1;
+    padding: 0;
+}
+
+#addfunds-close:hover {
+    color: #aaa;
+}
+
+#addfunds-body {
+    padding: 1rem;
+}
+
+#addfunds-selecter {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.addfunds-button {
+    height: 48px;
+    border-radius: 12px;
+    background-color: var(--button-color);
+    border-width: 0;
+
+    padding: 0px 24px;
+    color: white;
+}
+
+.addfunds-button:hover {
+    box-shadow: 0 2px 4px #000000;
+    background-color: var(--button-hover-color);
+}
+
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

@@ -42,7 +42,7 @@
 .header-button {
     height: 48px;
     border-radius: 12px;
-    background-color: #2e3d79;
+    background-color: var(--button-color);
     border-width: 0;
 
     padding: 0px 24px;
@@ -51,5 +51,5 @@
 
 .header-button:hover {
     box-shadow: 0 2px 4px #000000;
-    background-color: #465cb3;
+    background-color: var(--button-hover-color);
 }
