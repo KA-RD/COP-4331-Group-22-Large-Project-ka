@@ -19,12 +19,12 @@ function Roulette() {
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
   useEffect(() => {
-    const jwtToken = sessionStorage.getItem("token_data");
+    const jwtToken = sessionStorage.getItem("jwtToken");
     if (!jwtToken) return;
 
     const fetchBalance = async () => {
       try {
-        const res = await fetch("http://167.172.30.196/api/getbalance", {
+        const res = await fetch("http://167.172.30.196:5000/api/getcredits", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ jwtToken }),
@@ -152,5 +152,8 @@ function Roulette() {
 }
 
 export default Roulette;
+
+
+
 
 
