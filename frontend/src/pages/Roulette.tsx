@@ -29,9 +29,7 @@ function Roulette() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ jwtToken }),
         });
-
         if (!res.ok) return;
-
         const data = await res.json();
         setBalance(data.credits);
       } catch {
@@ -94,12 +92,27 @@ function Roulette() {
     return totalPayout;
   };
 
-  const handleSpinEnd = (number: number) => {
+  const handleSpinEnd = async (number: number) => {
     setWinningNumber(number);
     const payout = evaluateBets(number, bets);
-    setBalance(prev => prev + payout);
     setBets([]);
     setSpinInProgress(false);
+    setBalance(prev => prev + payout);
+
+    const jwtToken = sessionStorage.getItem("jwtToken");
+    if (jwtToken && payout > 0) {
+      try {
+        const response = await fetch("http://167.172.30.196:5000/api/addcredits", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ credits: payout, jwtToken }),
+        });
+        const data = await response.json();
+        if (data.newBalance !== undefined) setBalance(data.newBalance);
+      } catch (err) {
+        console.error(err);
+      }
+    }
   };
 
   return (
@@ -152,8 +165,3 @@ function Roulette() {
 }
 
 export default Roulette;
-
-
-
-
-
