@@ -40,7 +40,7 @@ function Login()
         setLastName('');
         setEmail('');
         // setVerificationCode('');
-        setMessage('');
+        // setMessage('');
     }
 
     async function doLogin(event:any) : Promise<void>
