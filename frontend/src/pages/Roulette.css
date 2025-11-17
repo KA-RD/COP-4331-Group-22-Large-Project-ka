@@ -37,7 +37,7 @@
 }
 
 .roulette-right .row {
-  max-height: 585px; 
+  max-height: 571px; 
   overflow-y: auto;
   height: 100%;
   /*dont override row padding*/
