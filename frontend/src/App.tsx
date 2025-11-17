@@ -3,18 +3,17 @@ import './App.css';
 
 import LoginPage from './pages/LoginPage';
 import CardPage from './pages/CardPage';
-import Roulette from './pages/Roulette';
+// import GamePage from './pages/Game';
+import RoulettePage from './pages/Roulette';
 
 function App() {
-  const jwtToken =
-    sessionStorage.getItem("jwtToken") || localStorage.getItem("jwtToken") || "";
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/cards" element={<CardPage />} />
-        <Route path="/roulette" element={<Roulette jwtToken={jwtToken} />} />
+        {/* <Route path="/game" element={<GamePage />} /> */}
+        <Route path="/roulette" element={<RoulettePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
