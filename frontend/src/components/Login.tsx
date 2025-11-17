@@ -79,6 +79,8 @@ function Login()
             var user = {firstName:firstName,lastName:lastName,id:userId}
             localStorage.setItem('user_data', JSON.stringify(user));
             
+            sessionStorage.setItem('jwtToken', accessToken);
+            
             setMessage('');
             navigate('/roulette');
           }
