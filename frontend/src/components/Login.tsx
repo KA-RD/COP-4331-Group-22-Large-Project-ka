@@ -299,7 +299,7 @@ function Login()
                 <input className='auth-field' type='email' id='signupEmail' placeholder='Email' value={userEmail} onChange={handleSetEmail} />
                 <input className='auth-field' type="text" id="signupName" placeholder="Username" value={loginName} onChange={handleSetLoginName} />
                 <input className='auth-field' type="password" id="signupPassword" placeholder="Password" value={loginPassword} onChange={handleSetPassword} />
-                <input type="submit" id="signupButton" className="signup-buttons" value = "Sign Up" onClick={doRegister} />
+                <input type="submit" id="signupButton" className="signup-buttons" value = "Register" onClick={doRegister} />
                 <p className='login-toggle'>
                     Already have an account? &nbsp;
                     <a className='login-toggle-link link' onClick={() => {clearFields(); clearMessage(); setPageState('login')}}>Login</a>
