@@ -64,49 +64,51 @@ function Roulette() {
 
   const evaluateBets = (winningNumber: number, bets: PlacedBet[]) => {
     const redNumbers = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
-    let totalPayout = 0;
+    // let totalPayout = 0;
+    let winloss = {totalPayout: 0, totalBet:0}
     for (const bet of bets) {
       const { type, value, amount } = bet;
-      totalPayout -= amount
+      // totalPayout -= amount
+      winloss.totalBet += amount
       switch (type) {
         case "straight":
-          if (winningNumber === value) totalPayout += amount * 35;
+          if (winningNumber === value) winloss.totalPayout += amount * 35;
           break;
         case "color":
           if ((value === "red" && redNumbers.has(winningNumber)) ||
               (value === "black" && winningNumber !== 0 && !redNumbers.has(winningNumber))) {
-            totalPayout += amount * 2;
+            winloss.totalPayout += amount * 2;
           }
           break;
         case "evenOdd":
           if (winningNumber !== 0) {
             if ((value === "even" && winningNumber % 2 === 0) ||
-                (value === "odd" && winningNumber % 2 !== 0)) totalPayout += amount * 2;
+                (value === "odd" && winningNumber % 2 !== 0)) winloss.totalPayout += amount * 2;
           }
           break;
         case "range":
           const [min, max] = (value as string).split("-").map(Number);
-          if (winningNumber >= min && winningNumber <= max) totalPayout += amount * 2;
+          if (winningNumber >= min && winningNumber <= max) winloss.totalPayout += amount * 2;
           break;
       }
     }
-    return totalPayout;
+    return winloss;
   };
 
   const handleSpinEnd = async (number: number) => {
     setWinningNumber(number);
-    const payout = evaluateBets(number, bets);
+    const winloss = evaluateBets(number, bets);
     setBets([]);
     setSpinInProgress(false);
-    setBalance(prev => prev + payout);
+    setBalance(prev => prev + winloss.totalPayout);
 
     const jwtToken = sessionStorage.getItem("jwtToken");
-    if (jwtToken && payout > 0) {
+    if (jwtToken) {
       try {
         const response = await fetch("http://167.172.30.196:5000/api/addcredits", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ credits: payout, jwtToken }),
+          body: JSON.stringify({ credits: winloss.totalPayout - winloss.totalBet, jwtToken }),
         });
         const data = await response.json();
         data
