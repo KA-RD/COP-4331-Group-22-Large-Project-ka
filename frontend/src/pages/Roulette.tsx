@@ -19,7 +19,7 @@ function Roulette() {
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
   useEffect(() => {
-    const jwtToken = localStorage.getItem("token_data");
+    const jwtToken = sessionStorage.getItem("token_data");
     if (!jwtToken) return;
 
     const fetchBalance = async () => {
@@ -152,4 +152,5 @@ function Roulette() {
 }
 
 export default Roulette;
+
 
