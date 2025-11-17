@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./RouletteWheel.css";
 // import wheelImg from "../assets/wheel.webp";
-import wheelImg from "../assets/wheel_400x400.webp";
+import wheelImg from "/wheel_400x400.webp";
 // import wheelImg from '/src/assets/wheel.webp?w=400&format=webp';
 
 interface RouletteWheelProps {
