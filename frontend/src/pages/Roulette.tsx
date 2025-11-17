@@ -24,7 +24,7 @@ function Roulette() {
 
     const fetchBalance = async () => {
       try {
-        const res = await fetch("http://167.172.30.196/api/getcredits", {
+        const res = await fetch("http://167.172.30.196:5000/api/getcredits", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ jwtToken }),
@@ -152,6 +152,7 @@ function Roulette() {
 }
 
 export default Roulette;
+
 
 
 
