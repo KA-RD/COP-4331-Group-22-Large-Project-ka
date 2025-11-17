@@ -52,4 +52,5 @@
 .header-button:hover {
     box-shadow: 0 2px 4px #000000;
     background-color: var(--button-hover-color);
+    cursor: pointer;
 }

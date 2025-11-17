@@ -22,7 +22,7 @@ const AddFunds: React.FC<AddFundsProps> = ({ isOpen, onClose, setBalance }) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ credits: num, jwtToken }),
             });
-            setTimeout(setBalance, 100);
+            setTimeout(setBalance, 50);
             
             } catch (err) {
             console.error(err);
