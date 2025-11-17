@@ -591,7 +591,7 @@ exports.setApp = function ( app, client )
       console.log('🔧 STEP 2: User lookup result:', user ? `Found user: ${user.FirstName} ${user.LastName}` : 'NO USER FOUND');
         
       if (!user) 
-      {
+      {//if it fails to find user
         return res.status(200).json({ 
           error: '',
           message: 'If an account with that email exists, a password reset link has been sent.'
@@ -655,7 +655,13 @@ exports.setApp = function ( app, client )
         console.error('💥 COMPLETE: Forgot password error:', e);
     }
 
-    res.status(200).json({ error: error });
+    //res.status(200).json({ error: error });
+    //completed ruturns message
+    res.status(200).json({ 
+      error: '',
+      message: 'If an account with that email exists, a password reset link has been sent.'
+    });
+
   });
 
   app.post('/api/getcredits', async (req, res, next) => {
