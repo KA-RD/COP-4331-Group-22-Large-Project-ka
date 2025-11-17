@@ -281,6 +281,9 @@ function Login()
                     value='Send Reset Email'
                     onClick={sendResetEmail}
                 />
+                <p className='login-toggle'>
+                    <a className='login-toggle-link link' onClick={() => {clearFields(); setPageState('login')}}>Back to Login</a>
+                </p>
                 </>
             )}
 
