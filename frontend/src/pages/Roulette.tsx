@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-
 import AppHeader from "../components/AppHeader";
 import Board, { type Bet } from "../components/Board";
 import ActiveBets from "../components/ActiveBets";
 import RouletteWheel from "../components/RouletteWheel";
-
 import "./Roulette.css";
 
 export interface PlacedBet extends Bet {
@@ -25,26 +23,19 @@ function Roulette() {
       try {
         const jwtToken =
           localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken");
-
         if (!jwtToken) return;
-
         const res = await fetch("http://167.172.30.196/api/getbalance", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ jwtToken }),
         });
-
         if (!res.ok) return;
-
         const data = await res.json();
         setBalance(data.credits);
       } catch (err) {
-        console.error("Failed to fetch balance", err);
+        console.error(err);
       }
     };
-
     fetchBalance();
   }, []);
 
@@ -73,10 +64,8 @@ function Roulette() {
   const evaluateBets = (winningNumber: number, bets: PlacedBet[]) => {
     const redNumbers = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
     let totalPayout = 0;
-
     for (const bet of bets) {
       const { type, value, amount } = bet;
-
       switch (type) {
         case "straight":
           if (winningNumber === value) totalPayout += amount * 35;
@@ -99,7 +88,6 @@ function Roulette() {
           break;
       }
     }
-
     return totalPayout;
   };
 
@@ -115,7 +103,6 @@ function Roulette() {
     <div>
       <AppHeader />
       <div id="roulette-content">
-
         <div className="roulette-main-row">
           <div className="roulette-left">
             <div className="roulette-page-section">
@@ -133,7 +120,6 @@ function Roulette() {
               </div>
             </div>
           </div>
-
           <div className="roulette-right">
             <div className="roulette-page-section">
               <h2 className="header-row">Current Bets</h2>
@@ -143,7 +129,6 @@ function Roulette() {
             </div>
           </div>
         </div>
-
         <div className="roulette-board-section">
           <div className="roulette-page-section">
             <h2 className="header-row">Betting Board</h2>
@@ -158,7 +143,6 @@ function Roulette() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
