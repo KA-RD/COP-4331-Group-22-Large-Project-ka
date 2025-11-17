@@ -79,22 +79,6 @@ module.exports = function(app) {
 
      console.log("Profit:", profit);
 
-    // --- SEND PROFIT TO /api/addcredits ---
-    if (jwtToken) {
-      try {
-         console.log('Sending to addcredits API:', payout, 'credits, JWT:', jwtToken);
-        const response = await fetch('http://167.172.30.196:5000/api/addcredits', { // adjust host/port if needed
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ credits: profit, jwtToken })
-        });
-        const data = await response.json();
-        console.log('Balance update response:', data);
-      } catch (err) {
-        console.error('Error updating balance:', err);
-      }
-    }
-
     // --- RETURN SPIN RESULT ---
     res.json({
       result,
@@ -105,5 +89,6 @@ module.exports = function(app) {
     });
   });
 };
+
 
 
