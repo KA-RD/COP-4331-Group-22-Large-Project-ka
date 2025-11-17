@@ -39,3 +39,28 @@
     width: 100%;
     padding: 0px 32px 0px;
 }
+
+#header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+#leaderboard-div {
+    min-width: 64px;
+    width: auto;
+}
+
+#leaderboard-button {
+    height: 48px;
+    border-radius: 12px;
+    background-color: #2e3d79;
+    border-width: 0;
+    padding: 0px 24px;
+    color: white;
+}
+
+#leaderboard-button:hover {
+    box-shadow: 0 2px 4px #000000;
+    background-color: #465cb3;
+}
