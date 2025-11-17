@@ -12,7 +12,7 @@ export interface PlacedBet extends Bet {
 }
 
 function Roulette() {
-  const [balance, setBalance] = useState(0); // start at 0, fetch real balance
+  const [balance, setBalance] = useState(0);
   const [bets, setBets] = useState<PlacedBet[]>([]);
   const [winningNumber, setWinningNumber] = useState<number | null>(null);
   const [betIdCounter, setBetIdCounter] = useState(0);
@@ -20,19 +20,26 @@ function Roulette() {
 
   const currentBetTotal = bets.reduce((sum, bet) => sum + bet.amount, 0);
 
-  // Fetch live balance when component mounts
   useEffect(() => {
     const fetchBalance = async () => {
       try {
+        const jwtToken =
+          localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken");
+
+        if (!jwtToken) return;
+
         const res = await fetch("http://167.172.30.196/api/getbalance", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // add JWT header if needed: Authorization: `Bearer ${jwtToken}`
           },
+          body: JSON.stringify({ jwtToken }),
         });
+
+        if (!res.ok) return;
+
         const data = await res.json();
-        setBalance(data.balance);
+        setBalance(data.credits);
       } catch (err) {
         console.error("Failed to fetch balance", err);
       }
