@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import CardPage from './pages/CardPage';
 // import GamePage from './pages/Game';
 import RoulettePage from './pages/Roulette';
+import LeaderboardPage from './pages/Leaderboard';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/cards" element={<CardPage />} />
+  <Route path="/leaderboard" element={<LeaderboardPage />} />
         {/* <Route path="/game" element={<GamePage />} /> */}
         <Route path="/roulette" element={<RoulettePage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
