@@ -67,6 +67,7 @@ function Roulette() {
     let totalPayout = 0;
     for (const bet of bets) {
       const { type, value, amount } = bet;
+      totalPayout -= amount
       switch (type) {
         case "straight":
           if (winningNumber === value) totalPayout += amount * 35;
