@@ -15,13 +15,14 @@
 .roulette-main-row {
   display: flex;
   gap: 20px; 
-  align-items: flex-start; 
+  flex-wrap: wrap;
+  /* align-items: flex-start;  */
 }
 
 .roulette-left {
   flex: 2;
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   gap: 20px;
 }
 
@@ -32,11 +33,12 @@
 .roulette-right .row {
   max-height: 585px; 
   overflow-y: auto;
+  height: 100%;
   /*dont override row padding*/
   /* padding-right: 8px;  */ 
 }
 
-.roulette-right .row::-webkit-scrollbar {
+/* .roulette-right .row::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -47,7 +49,7 @@
 
 .roulette-right .row::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0.1);
-}
+} */
 
 .roulette-page-section {
   overflow: hidden;
