@@ -111,7 +111,7 @@ function Roulette() {
         });
         // const data = await response.json();
         // data
-        fetchBalance()
+        await fetchBalance()
         // if (data.newBalance !== undefined) setBalance(data.newBalance);
       } catch (err) {
         console.error(err);
