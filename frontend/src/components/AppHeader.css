@@ -1,0 +1,56 @@
+#app-header {
+    background-color: #191f3b;
+}
+
+#roulette-header {
+
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 1rem;
+
+    align-self: flex-start;
+
+    max-width: 1280px;
+    margin: 0 auto;
+
+    flex-wrap: wrap;
+}
+
+@media (min-width: 800px) {
+  #roulette-header {
+    padding: 10px 2rem;
+  }
+}
+
+#username-div {
+    margin-left: 16px;
+}
+
+#header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.header-button-div {
+    min-width: 64px;
+    width: auto;
+}
+
+.header-button {
+    height: 48px;
+    border-radius: 12px;
+    background-color: var(--button-color);
+    border-width: 0;
+
+    padding: 0px 24px;
+    color: white;
+}
+
+.header-button:hover {
+    box-shadow: 0 2px 4px #000000;
+    background-color: var(--button-hover-color);
+    cursor: pointer;
+}

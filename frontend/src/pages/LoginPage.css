@@ -1,0 +1,17 @@
+.login-container {
+    background-color: white;
+    border-radius: 20px;
+    padding: 2em;
+
+    color: black;
+    min-width: 500px;
+    width: 40%;
+
+    /* transition: max-height 0.5s ease-in-out; */
+    height: auto;
+
+    margin: 0 auto;
+
+    transition: all 0.15s ease-in;
+    overflow: hidden;
+}

@@ -1,0 +1,1 @@
+ /Users/elisuansing/StudioProjects/poos_project/.dart_tool/flutter_build/c10f348643c9314aad530f80c0751c04/native_assets.json: 

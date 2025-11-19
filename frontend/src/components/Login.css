@@ -1,0 +1,48 @@
+.auth-field {
+    height: 64px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    width: 100%;
+    background: white;
+    color: black;
+    box-sizing: border-box;
+}
+
+.auth-field:focus {
+    box-shadow: 0 2px 4px #888;
+    border-width: 1px;
+    border-color: rgb(5, 84, 189);
+}
+
+.signup-buttons {
+    height: 64px;
+    width: 100%;
+    border-radius: 1em;
+    background-color: rgb(10, 116, 255);
+    border-width: 0;
+    transition: border-radius 0.15s ease-in;
+}
+
+.signup-buttons:hover {
+    box-shadow: 0 2px 4px #888;
+    background-color: rgb(5, 84, 189);
+    border-radius: 4px;
+}
+
+.link {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #0056b3;
+}
+
+#forgot-password-toggle {
+    text-align: left;
+    margin-top: -12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}

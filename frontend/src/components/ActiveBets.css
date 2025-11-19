@@ -1,0 +1,19 @@
+#active-bets {
+  width: 100%;
+}
+
+#active-bets ul {
+  list-style: none;
+}
+
+#active-bets li {
+  background: #2e4458;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+#active-bets li:hover {
+    text-decoration: line-through;
+    cursor: pointer;
+}

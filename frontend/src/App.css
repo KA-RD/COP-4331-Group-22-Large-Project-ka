@@ -1,0 +1,77 @@
+#root {
+  /* max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem; */
+  text-align: center;
+  width: 100%;
+  align-self: flex-start;
+
+  --chip-1-color: rgb(92, 91, 91);
+  --chip-5-color: rgb(168, 0, 0);
+  --chip-25-color: rgb(7, 88, 0);
+  --chip-100-color: black;
+  --chip-500-color: purple;
+  --chip-1000-color: rgb(153, 101, 4);
+
+  --background-color: #0e1328;
+  --header-color: #191f3b;
+  --row-color: #141935;
+  --button-color: #2e3d79;
+  --button-hover-color: #465cb3;
+}
+
+.vh-centered-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* 
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+} */

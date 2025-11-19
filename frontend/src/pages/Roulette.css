@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#roulette-content {
+  width: 100%;
+  min-width: 256px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (min-width: 800px) {
+  #roulette-content {
+    padding: 2rem;
+  }
+}
+
+.roulette-main-row {
+  display: flex;
+  gap: 20px; 
+  flex-wrap: wrap;
+  /* align-items: flex-start;  */
+}
+
+.roulette-left {
+  flex: 2;
+  /* display: flex; */
+  /* flex-direction: column; */
+  gap: 20px;
+}
+
+.roulette-right {
+  flex: 1;
+}
+
+.roulette-right .row {
+  max-height: 571px; 
+  overflow-y: auto;
+  height: 100%;
+  /*dont override row padding*/
+  /* padding-right: 8px;  */ 
+}
+
+/* .roulette-right .row::-webkit-scrollbar {
+  width: 8px;
+}
+
+.roulette-right .row::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.roulette-right .row::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+} */
+
+.roulette-page-section {
+  overflow: hidden;
+  background-color: #141935;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+}
+
+.header-row {
+  background-color: #191f3b;
+  padding: 1rem 1rem;
+}
+
+.row {
+  padding: 1rem;
+}
+
+@media (min-width: 800px) {
+  .row {
+    padding: 1rem 2rem 2rem;
+  }
+}
+
+.roulette-wheel-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.spin-button {
+  margin-top: 80px; 
+}

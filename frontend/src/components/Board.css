@@ -1,0 +1,164 @@
+#board-subheader {
+    @media only screen and (min-width: 600px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    margin-bottom: 8px;
+}
+
+#board-bet-info-area {
+  gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 800px) {
+  #board-bet-info-area {
+    gap: 16px;
+    justify-content: right;
+  }
+}
+
+.board-bet-info {
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .board-bet-info {
+    font-size: larger;
+    width: 12rem;
+  }
+}
+
+#chip-selecter {
+    justify-content: center;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.chip {
+    border: 4px solid #fff;
+    padding: 4px;
+    width: 4rem;
+    height: 4rem;
+    position: relative;
+    border-radius: 50%;
+    transition: all 0.1s ease;
+    font-size: 0.85rem;
+}
+
+.chip::before {
+    background: none;
+    border: 4px solid #fff;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+
+@media (min-width: 800px) {
+  .chip {
+    width: 5rem;
+    height: 5rem;
+    font-size: 1rem;
+  }
+}
+
+.chip.selected {
+    border-color: rgb(0, 225, 255);
+    scale: 1.1;
+}
+
+.bet-button{
+    border-color: rgb(0, 172, 172);
+    border-width: 2px;
+    border-radius: 8px;
+
+    padding: 12px 8px;
+
+    transition: all 0.1s ease;
+
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.bet-button.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.bet-button:hover:not(:disabled) {
+    border-color: aqua;
+}
+
+.red-bet-button {
+    background-color: rgb(167, 37, 37);
+}
+
+#inside-bets {
+    display: grid;
+    gap: 4px;
+    
+    @media only screen and (max-width: 800px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media only screen and (min-width: 800px) {
+        grid-template-columns: repeat(13, 1fr);
+    }
+    
+    margin-bottom: 8px;
+}
+
+#zero-button {
+    background-color: green;
+
+    @media only screen and (max-width: 800px) {
+        grid-column: 1 / span 3;
+        grid-row: 1;
+    }
+    
+    @media only screen and (min-width: 800px) {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+    }
+}
+
+.number-button:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+
+#outside-bets {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.outside-bet-button {
+    grid-column: span 2;
+}
+
+.outside-bet-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+#clear-bets-button {
+    width: 100%;
+}
