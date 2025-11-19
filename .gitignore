@@ -1,3 +1,11 @@
+# Android Studio / Flutter
+.idea/
+.gradle/
+local.properties
+/build/
+*.apk
+*.so
+*.dSYM
 
 # Backend environment
 .env
@@ -8,12 +16,8 @@ node_modules/
 
 # Backend logs
 *.log
+npm-debug.log*
 
 # Runtime
 *.pid
 .DS_Store
-
-/build/
-*.apk
-*.so
-*.dSYM
